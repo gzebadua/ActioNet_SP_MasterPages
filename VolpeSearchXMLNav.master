@@ -1,0 +1,403 @@
+<%@Master language="C#" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@ Import Namespace="Microsoft.SharePoint" %>
+<%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="wssuc" TagName="Welcome" src="~/_controltemplates/Welcome.ascx" %>
+<%@ Register TagPrefix="wssuc" TagName="DesignModeConsole" src="~/_controltemplates/DesignModeConsole.ascx" %>
+<%@ Register TagPrefix="wssuc" TagName="MUISelector" src="~/_controltemplates/MUISelector.ascx" %>
+<%@ Register Tagprefix="PublishingNavigation" Namespace="Microsoft.SharePoint.Publishing.Navigation" Assembly="Microsoft.SharePoint.Publishing, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+<html id="Html1" xmlns="http://www.w3.org/1999/xhtml" lang="<%$Resources:wss,language_value %>" dir="<%$Resources:wss,multipages_direction_dir_value %>" runat="server" __expr-val-dir="ltr">
+<head id="Head1" runat="server">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Expires" content="0"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<!-- robots -->
+	<SharePoint:RobotsMetaTag ID="RobotsMetaTag1" runat="server"/>
+	
+	<!-- page title - overridden by asp:content on pages or page layouts -->
+	<title id="Title1" runat="server"><asp:ContentPlaceHolder id="PlaceHolderPageTitle" runat="server">VolpeNet</asp:ContentPlaceHolder></title>
+	
+	<!-- favicon -->
+	<SharePoint:SPShortcutIcon ID="SPShortcutIcon1" runat="server" IconUrl="/SiteCollectionImages/favicon.ico"/>
+	
+	<!-- all OOTB css -->
+	<SharePoint:CssLink ID="CssLink1" runat="server" Version="4"/>
+	<SharePoint:Theme ID="Theme1" runat="server"/>
+	
+	<!-- page manager interacts with script and the sharepoint object model -->
+	<SharePoint:SPPageManager ID="SPPageManager1" runat="server"/>
+	
+	<!-- unified logging service -->
+	<SharePoint:ULSClientConfig ID="ULSClientConfig1" runat="server"/>
+	
+	<!-- identifies to scripting elements that this is a v4 master page. required for scrolling? -->
+	<script type="text/javascript">
+	    var _fV4UI = true;
+	</script>
+	
+	<!-- load SharePoint javascript -->
+	<SharePoint:ScriptLink ID="ScriptLink1" language="javascript" Defer="true" runat="server"/>
+ 
+	<!-- link to our custom css  -->
+	<SharePoint:CssRegistration ID="CssRegistration4" name="/_layouts/1033/styles/custom/jquery-ui-1.8.20.custom-pro.css" After="corev4.css" runat="server"/>
+	<SharePoint:CssRegistration ID="CssRegistration3" name="/_layouts/1033/styles/custom/sharepointcustom-proC.css" After="corev4.css" runat="server"/>
+	<SharePoint:CssRegistration ID="CssRegistration2" name="/_layouts/1033/styles/custom/body-proC.css" After="corev4.css" runat="server"/>
+	<SharePoint:CssRegistration ID="CssRegistration1" name="/_layouts/1033/styles/custom/reset-proC.css" After="corev4.css" runat="server"/>
+
+	<!-- Include Print CSS -->
+	<link rel="stylesheet" href="/_layouts/1033/styles/custom/print.css" type="text/css" media="print" />
+	
+	<script type="text/javascript" src="/_layouts/1033/styles/custom/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="/_layouts/1033/styles/custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/_layouts/1033/styles/custom/jquery.corner.js"></script>
+	
+	<!-- javascript to override the active-x message in ie 
+		// See http://blog.drisgill.com/2010/02/removing-name-activex-control-warning.html for more info
+		// Remove if the IM pressence icons are needed in SharePoint
+	-->
+	<script type="text/javascript">
+	    function ProcessImn() { }
+	    function ProcessImnMarkers() { }	
+	</script>
+	
+	<!-- additional header delegate control -->
+	<SharePoint:DelegateControl ID="DelegateControl1" runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true"/>
+	
+	<!-- additional header placeholder - overridden by asp:content on pages or page layouts -->
+	<asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server">	
+
+	</asp:ContentPlaceHolder>
+
+	<!-- microsoft says these should always be inside the head tag. -->
+   	<asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" runat ="server"/>
+	<asp:ContentPlaceHolder id="PlaceHolderTitleAreaClass" runat ="server"/>
+	
+	<!-- Volpe added CSS -->	
+	<style type="text/css">
+	 	#s4-ribboncont {
+			background-color: White;
+			margin: 0 auto;
+			width: 970px;
+		}
+	
+		div.logoDiv	{
+			width: 400px;
+			float:left;
+		}
+	
+		 div.searchDiv {
+		 	width: 400px;
+			float:right;
+		}
+		
+		/* remove left margin */ 
+		.s4-ca { 
+		margin-left: 0px; 
+		} 
+		/* remove gray background at top (optional) */ 
+		.srch-sb-results { 
+		background:transparent none repeat scroll 0 0; 
+		} 
+		/* clean up top padding on 1st search page */ 
+		.srch-sb-main { 
+		padding-top: 20px; 
+		} 
+		/* remove centering on 1st search page (optional) */ 
+		.srch-sb-results4 { 
+		margin: inherit; 
+		padding-left: 20px; 
+		} 
+		/* remove background color on 1st search page (useful for colored designs) */ 
+		.ms-bodyareaframe { 
+		background-color: transparent; 
+		} 
+		/* ------------------------------------------ */ 
+		/* -- CSS that may be req. to reset the search styling -- */ 
+		/* ------------------------------------------ */ 
+		/* fix height of area above search results */ 
+		td.ms-titleareaframe, div.ms-titleareaframe, .ms-pagetitleareaframe { 
+		height: auto !important; 
+		} 
+		/* fix border color on search results */ 
+		.ms-main .ms-ptabrx, .ms-main .ms-sctabrx, .ms-main .ms-ptabcn, .ms-main .ms-sctabcn { 
+		border-color: #eeeeee; 
+		} 
+		/* fix arrangement of body area on search results */ 
+		.srch-sb-results { 
+		height: auto; 
+		} 
+		/* fix positioning of prefs and advanced link on results */ 
+		.ms-sblink { 
+		display:block; 
+		} 
+		/* fix the color of the prefs and advanced link on results */ 
+		.ms-sblink a:link, .ms-sblink a:visited, .ms-sblink a:hover { 
+		color:#0072BC; 
+		} 
+		
+		.ms-pagemargin {
+			 background-color:transparent !important;
+		}
+	
+	</style>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("div.s4-toplinks").corner();
+		});
+	</script>
+
+</head>
+
+<body scroll="no" onload="javascript:_spBodyOnLoadWrapper();">
+
+<form id="Form1" runat="server" onsubmit="return _spFormOnSubmitWrapper();">
+
+<!-- handles SharePoint scripts -->
+<asp:ScriptManager id="ScriptManager" runat="server" EnablePageMethods="false" EnablePartialRendering="true" EnableScriptGlobalization="false" EnableScriptLocalization="true" />
+
+<!-- controls the web parts and zones -->
+<WebPartPages:SPWebPartManager ID="SPWebPartManager1" runat="server"/>
+
+<!-- this control is more navigation for mysites, otherwise it is empty -->
+<SharePoint:DelegateControl ID="DelegateControl2" runat="server" ControlId="GlobalNavigation"/>
+
+<!-- =====  Begin Ribbon ============================================================ -->
+
+
+
+
+
+    <!-- dynamic notification area -->
+	<div id="notificationArea" class="s4-noti"></div>
+
+    <!-- old navigation delegate? -->
+	<asp:ContentPlaceHolder ID="SPNavigation" runat="server">
+			<SharePoint:DelegateControl runat="server" ControlId="PublishingConsole" Id="PublishingConsoleDelegate">
+		   </SharePoint:DelegateControl>
+	</asp:ContentPlaceHolder>
+	
+	<!-- top web part panel -->
+	<div id="WebPartAdderUpdatePanelContainer">
+	</div>
+
+
+<!-- =====  End Ribbon and other Top Content ============================================================ -->
+
+
+<!-- =====  Start Scrolling Body Area ============================================================ -->
+
+<!-- these two div id's are used to setup the main scrolling page area, they should stay if you are sticking the ribbon to the top -->
+<div ID="s4-workspace" class="s4-nosetwidth"><!--  NOTE: s4-nosetwidth is used when you are setting a fixed page width in css, remove for 100% -->
+  <div id="centered_content">
+  <div ID="s4-bodyContainer">
+  
+  <!-- id="mso_contentdiv" required, helps SharePoint put the web part editing pane in the main body on the right, you can move the ID if needed -->
+  <div id="MSO_ContentDiv" runat="server">
+
+	<!-- link back to homepage, SiteLogoImage gets replaced by the Site Icon, you can hard code this so that its not overridden by the Site Icon or even remove -->
+	<div class="s4-notdlg logoDiv"><!-- NOTE: any time you see s4-notdlg, this element will be hidden from SharePoint dialog windows  -->
+		<SharePoint:SPLinkButton ID="SPLinkButton1" runat="server" NavigateUrl="http://volpenet.volpe.dot.gov/">
+			<SharePoint:SiteLogoImage ID="SiteLogoImage1"  LogoImageUrl="/_layouts/1033/styles/volpeimages/logo.png" AlternateText="VolpeNet Logo" ToolTip="VolpeNet" runat="server"/>
+		</SharePoint:SPLinkButton>	
+	</div>
+		
+	<!-- search box loads from delegate, style with CSS -->
+	<div class="s4-notdlg searchDiv">
+		<asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
+			<SharePoint:DelegateControl ID="DelegateControl3" runat="server" ControlId="SmallSearchInputBox" Version="4"/>
+		</asp:ContentPlaceHolder>
+	</div>
+
+	<div class="mySites">
+		<a href="http://my.dot.gov/default.aspx">My Site</a>
+	</div>
+
+	<!-- top navigation area -->
+	<div class="s4-notdlg">
+		<!-- top navigation publishing data source -->
+		<PublishingNavigation:PortalSiteMapDataSource
+			ID="topSiteMap"
+			runat="server"
+			EnableViewState="false"
+			SiteMapProvider="GlobalNavigation"
+			StartFromCurrentNode="true"
+			StartingNodeOffset="0"
+			ShowStartingNode="false"
+			TrimNonCurrentTypes="Heading"/>
+
+	<!-- Volpe custom clear tag -->
+	<div class="clearfix"></div>
+
+		<!-- top navigation menu (set to use the new Simple Rendering) -->
+		<div id="navcontainer" class="clearfix">
+			<!--<img src="/SiteAssets/navendr.png" alt="right end cap for nav decoration"  style="float:right; margin-right: 1px;" />
+			<img src="/SiteAssets/navendl.png" alt="left end cap for nav decoration" style="float:left" />-->
+			
+			<div class="s4-lp s4-toplinks">
+				<asp:ContentPlaceHolder id="PlaceHolderHorizontalNav" runat="server">
+				</asp:ContentPlaceHolder>				
+				<asp:ContentPlaceHolder id="PlaceHolderHorizontalNav5" runat="server">
+					<SharePoint:AspMenu
+					ID="TopNavigationMenuV4"
+					Runat="server"
+					EnableViewState="false"
+					DataSourceID="VolpeGlobalMapDataSource"
+					AccessKey="<%$Resources:wss,navigation_accesskey%>"
+					UseSimpleRendering="true"
+					UseSeparateCss="false"
+					Orientation="Horizontal"
+					StaticDisplayLevels="1"
+					MaximumDynamicDisplayLevels="3"
+					SkipLinkText=""
+					CssClass="s4-tn"/>
+				
+				<asp:SiteMapDataSource
+				ShowStartingNode="False"
+				SiteMapProvider="VolpeSiteMapProvider"
+				id="VolpeGlobalMapDataSource"
+				runat="server"/>
+				
+				</asp:ContentPlaceHolder>
+				
+				<asp:ContentPlaceHolder id="PlaceHolderTopNavBar" runat="server" Visible="false">
+				</asp:ContentPlaceHolder>				                        
+			</div>
+			
+		</div>
+	</div>
+
+	<!-- page editing status bar -->
+	<div class="s4-notdlg">
+		<div id="s4-statusbarcontainer" class="s4-notdlg">
+			<div id="pageStatusBar" class="s4-status-s1"></div>
+		</div>
+	</div>
+
+	<!-- Volpe custom clear tag -->
+	<div class="clearfix"></div>
+	
+	<!-- s4-ca is the main body div -->
+	<div class="s4-ca">
+		<div class="s4-notdlg">
+			<!-- links for I like it and Tags and Notes -->
+			<!-- use ControlID="GlobalSiteLink3" for larger icons or remove this line entirely for no icons -->
+			<SharePoint:DelegateControl ID="DelegateControl4" ControlId="GlobalSiteLink3-mini" Scope="Farm" runat="server"/>
+		</div>
+		
+		<!-- place a table around this to handle funky markup in _Layouts/areacachesettings.aspx (if you want) -->
+		<asp:ContentPlaceHolder id="PlaceHolderPageDescription" runat="server" />
+		<asp:ContentPlaceHolder id="PlaceHolderBodyLeftBorder" runat="server" />
+		
+		<div>
+			<!-- Breadcrumb place holder moved here for Search branding -->
+			<asp:ContentPlaceHolder id="PlaceHolderTitleBreadcrumb" runat="server"></asp:ContentPlaceHolder>
+			<!-- page content loads from the pages and pages layout -->
+			<asp:ContentPlaceHolder id="PlaceHolderMain" runat="server"/>
+		</div>
+	</div>
+
+        
+	<!-- the developer dashboard can be turned on by administrators and shows debuging and performance info for the page -->
+	<div id="DeveloperDashboard" class="ms-developerdashboard">
+		<SharePoint:DeveloperDashboard ID="DeveloperDashboard1" runat="server"/>
+	</div>
+
+  </div>
+  </div>
+  </div>
+
+	<!-- footer -->
+	<asp:ContentPlaceHolder id="PlaceHolder5Footer" runat="server">
+		<asp:SiteMapDataSource
+		ShowStartingNode="False"
+		SiteMapProvider="VolpeSiteMapProviderFooter"
+		id="VolpeGlobalMapDataSourceFooter"
+		runat="server"/>
+	
+		<asp:Repeater runat="server" id="Footer" DataSourceID="VolpeGlobalMapDataSourceFooter">
+			<HeaderTemplate>
+				<div class="footer" style="clear: both;"> 
+			    	<div class="footerWrapper">
+			</HeaderTemplate>
+			<SeparatorTemplate>
+			</SeparatorTemplate>
+			<ItemTemplate>
+				<div class="footlinks">
+					<h3><%# Eval("Title")%></h3>
+					<ul>
+		               <asp:Repeater runat="server" ID="ChildMenuRepeater" DataSource='<%# ((SiteMapNode)Container.DataItem).ChildNodes %>'>
+				       	<HeaderTemplate></HeaderTemplate>
+				       	<ItemTemplate>
+					       <li><a href="<%# Eval("Url")%>"><%# Eval("Title")%></a></li>
+						</ItemTemplate>
+					    <FooterTemplate></FooterTemplate>
+						   </asp:Repeater>
+	   	            </ul>
+				</div>
+			</ItemTemplate>
+			<FooterTemplate>
+					</div>                        
+				</div>
+			</FooterTemplate>
+		</asp:Repeater>
+		
+	</asp:ContentPlaceHolder>
+    <!--END  FOOTER -->  
+
+</div>
+
+<!-- =====  End scrolling body area with these two previous div's ============================================================ -->
+
+<!-- The form digest security control used to for security validation on forms -->
+<asp:ContentPlaceHolder id="PlaceHolderFormDigest" runat="server">
+	<SharePoint:FormDigest ID="FormDigest1" runat="server"/>
+</asp:ContentPlaceHolder>
+
+<!-- =====  Hidden Placeholders ============================================================ -->
+
+<!-- Handle Search "enter" key and back button -->
+<input type="text" name="__spDummyText1" style="display:none;" size="1"/>
+<input type="text" name="__spDummyText2" style="display:none;" size="1"/>
+
+</form>
+
+<!-- the following two are from the Blog Post.aspx page -->
+<asp:ContentPlaceHolder id="PlaceHolderPageImage" runat="server" />
+<asp:ContentPlaceHolder id="PlaceHolderLeftNavBar" runat="server" />
+
+<!-- extra form for some instances -->
+<asp:ContentPlaceHolder id="PlaceHolderUtilityContent" runat="server" />
+
+<!-- warn users of old browsers that they need to upgrade -->
+<SharePoint:WarnOnUnsupportedBrowsers ID="WarnOnUnsupportedBrowsers1" runat="server"/>
+
+<!-- This was not in Drisgill's master page but we were getting an error when trying to start new pages and copied it back from v4.master. -->
+<asp:ContentPlaceHolder id="PlaceHolderBodyLeftMargin" runat="server"></asp:ContentPlaceHolder>
+<asp:ContentPlaceHolder id="PlaceHolderBodyRightMargin" runat="server"></asp:ContentPlaceHolder>
+
+<!-- This was not in Drisgill's master page but were added because of errors on the home page of the top site. -->
+<asp:ContentPlaceHolder id="PlaceHolderLeftActions" runat="server"></asp:ContentPlaceHolder>
+<asp:ContentPlaceHolder id="PlaceHolderMiniConsole" runat="server"></asp:ContentPlaceHolder>
+
+
+<!-- Moved here for Search branding -->
+<div class="s4-notdlg">
+<!-- page title -->
+<asp:ContentPlaceHolder id="PlaceHolderPageTitleInTitleArea" runat="server" />			
+</div>
+
+<!-- this fixes "double ribbon" problem -->
+<asp:ContentPlaceHolder id="PlaceHolderGlobalNavigation" runat="server"/>
+		
+<!-- adding these resolved errors throw at start of building this master page -->		
+<asp:ContentPlaceHolder id="PlaceHolderTitleLeftBorder" runat="server" />			
+<asp:ContentPlaceHolder id="PlaceHolderNavSpacer" runat="server" />			
+<asp:ContentPlaceHolder id="PlaceHolderTitleAreaSeparator" runat="server" />
+
+<!-- Starter Master Page by Randy Drisgill (http://blog.drisgill.com) - Oct. 7, 2010 -->
+<!-- Remove this credit if you want, but if you leave it in I will appreciate it! -->
+</body>
+</html>
